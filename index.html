@@ -3,37 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <title>Amaram Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 <style>
-/* Основні стилі */
 body {
   margin: 0;
   height: 100vh;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #111; /* чорний фон */
-  color: #fff; /* білий текст */
+  background: #111;
+  color: #fff;
   overflow: hidden;
   position: relative;
+  transition: background 0.5s, color 0.5s;
+}
+
+body.light {
+  background: #f5f5f5;
+  color: #111;
 }
 
 /* Центрований блок */
 .center {
   text-align: center;
-  background: rgba(255, 255, 255, 0.05); /* легка прозорість */
+  background: rgba(255, 255, 255, 0.05);
   padding: 50px 80px;
   border-radius: 20px;
   box-shadow: 0 0 50px rgba(255,255,255,0.1);
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, background 0.5s;
   z-index: 2;
+}
+
+body.light .center {
+  background: rgba(0,0,0,0.05);
 }
 
 .center:hover {
   transform: scale(1.03);
 }
 
-/* Заголовок */
 .center h1 {
   font-size: 3em;
   margin: 0;
@@ -56,7 +65,6 @@ body {
   transition: 0.4s ease;
 }
 
-/* Ефект хвилі при наведенні */
 .btn::before {
   content: "";
   position: absolute;
@@ -81,33 +89,110 @@ body {
   box-shadow: 0 0 20px #ff2a75;
 }
 
-/* Частинки прикрас */
+/* Частинки з центру */
 .particle {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   background: #fff;
   border-radius: 50%;
   opacity: 0.8;
-  animation: float 6s linear infinite;
+  animation-name: float;
+  animation-timing-function: ease-out;
+  z-index: 1;
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(100vh) translateX(0);
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-50vh) translateX(50px);
-    opacity: 0;
-  }
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
+}
+
+/* Неоновий шрифт для логотипу */
+.side-text {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #ff2a75;
+  text-shadow: 0 0 5px #ff2a75, 0 0 10px #ff2a75, 0 0 20px #ff2a75, 0 0 40px #ff2a75;
+  cursor: default;
+  z-index: 2;
+}
+
+/* Кнопка Теми */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #111;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 2;
+}
+
+body.light .theme-toggle {
+  background: #111;
+  color: #fff;
+}
+
+/* Кнопка Про нас зверху, окремо */
+.about-btn {
+  position: absolute;
+  top: 20px; /* зверху */
+  right: 150px; /* трохи лівіше від кнопки теми */
+  background: none;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 2;
+}
+
+.about-btn:hover {
+  color: #ff2a75;
+}
+
+body.light .about-btn {
+  color: #111;
+}
+
+/* Спливаючий блок Про нас */
+.about-popup {
+  position: absolute;
+  top: 60px;
+  right: 150px; /* прив'язка до кнопки */
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 3;
+  max-width: 300px;
+  font-weight: bold;
+  line-height: 1.4em;
 }
 </style>
 </head>
 <body>
+
+<div class="side-text">Amaram.Shop</div>
+<button class="about-btn">Про нас</button>
+
+<div class="about-popup">
+  Ми студія яка виготовляє індивідуальні прикраси на ваш вибір та смак. Також є прикраси, які ви можете замовити прямо зараз, які вже є в наявності! Не втрачай можливості!
+</div>
+
+<button class="theme-toggle">Тема</button>
 
 <div class="center">
   <h1>Amaram Shop</h1>
@@ -116,19 +201,34 @@ body {
   </a>
 </div>
 
-<!-- Частинки -->
 <script>
-const particlesCount = 50; // Кількість частинок
+// Частинки
+const particlesCount = 60;
 for (let i = 0; i < particlesCount; i++) {
   const p = document.createElement('div');
   p.classList.add('particle');
-  p.style.left = Math.random() * window.innerWidth + 'px';
-  p.style.top = Math.random() * window.innerHeight + 'px';
-  p.style.width = p.style.height = (Math.random() * 6 + 3) + 'px';
-  p.style.animationDuration = (Math.random() * 5 + 3) + 's';
-  p.style.opacity = Math.random() * 0.8 + 0.2;
+  p.style.left = window.innerWidth/2 + 'px';
+  p.style.top = window.innerHeight/2 + 'px';
+  const x = (Math.random() - 0.5) * 800 + 'px';
+  const y = (Math.random() - 0.5) * 600 + 'px';
+  p.style.setProperty('--x', x);
+  p.style.setProperty('--y', y);
+  p.style.animationDuration = (Math.random()*5 + 3) + 's';
+  p.style.width = p.style.height = (Math.random()*6 + 3) + 'px';
   document.body.appendChild(p);
 }
+
+// Тема
+document.querySelector('.theme-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('light');
+});
+
+// Про нас
+const aboutBtn = document.querySelector('.about-btn');
+const aboutPopup = document.querySelector('.about-popup');
+aboutBtn.addEventListener('click', () => {
+  aboutPopup.style.display = aboutPopup.style.display === 'block' ? 'none' : 'block';
+});
 </script>
 
 </body>
