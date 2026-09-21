@@ -2,233 +2,393 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<title>Amaram Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для тебе ❤️</title>
+
 <style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-  margin: 0;
-  height: 100vh;
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #111;
-  color: #fff;
-  overflow: hidden;
-  position: relative;
-  transition: background 0.5s, color 0.5s;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at center, #35152d, #100812 70%);
+    color: white;
+    height: 100vh;
 }
 
-body.light {
-  background: #f5f5f5;
-  color: #111;
+/* ОСНОВНИЙ ЕКРАН */
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    transition: 1s;
 }
 
-/* Центрований блок */
-.center {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 50px 80px;
-  border-radius: 20px;
-  box-shadow: 0 0 50px rgba(255,255,255,0.1);
-  transition: transform 0.5s ease, background 0.5s;
-  z-index: 2;
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.08);
 }
 
-body.light .center {
-  background: rgba(0,0,0,0.05);
-}
+/* ЗІРКИ */
 
-.center:hover {
-  transform: scale(1.03);
-}
-
-.center h1 {
-  font-size: 3em;
-  margin: 0;
-  letter-spacing: 2px;
-}
-
-/* Кнопка Instagram */
-.btn {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 18px 40px;
-  background: #fff;
-  color: #111;
-  text-decoration: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  position: relative;
-  overflow: hidden;
-  transition: 0.4s ease;
-}
-
-.btn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255,255,255,0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
-}
-
-.btn:hover::before {
-  width: 300%;
-  height: 300%;
-}
-
-.btn:hover {
-  color: #ff2a75;
-  background: #fff;
-  box-shadow: 0 0 20px #ff2a75;
-}
-
-/* Частинки з центру */
 .particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #fff;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation-name: float;
-  animation-timing-function: ease-out;
-  z-index: 1;
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float 5s infinite ease-in-out;
 }
 
 @keyframes float {
-  0% { transform: translate(0,0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
+    0%,100% {
+        transform: translateY(0);
+        opacity: .2;
+    }
+
+    50% {
+        transform: translateY(-30px);
+        opacity: 1;
+    }
 }
 
-/* Неоновий шрифт для логотипу */
-.side-text {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5em;
-  font-weight: 700;
-  color: #ff2a75;
-  text-shadow: 0 0 5px #ff2a75, 0 0 10px #ff2a75, 0 0 20px #ff2a75, 0 0 40px #ff2a75;
-  cursor: default;
-  z-index: 2;
+/* ТЕКСТ */
+
+.title {
+    font-size: 34px;
+    margin-bottom: 15px;
+    animation: fadeUp 1.5s ease;
 }
 
-/* Кнопка Теми */
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background: #fff;
-  color: #111;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.5s;
-  z-index: 2;
+.subtitle {
+    font-size: 17px;
+    opacity: .75;
+    margin-bottom: 35px;
 }
 
-body.light .theme-toggle {
-  background: #111;
-  color: #fff;
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Кнопка Про нас зверху, окремо */
-.about-btn {
-  position: absolute;
-  top: 20px; /* зверху */
-  right: 150px; /* трохи лівіше від кнопки теми */
-  background: none;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1em;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 2;
+/* КНОПКА */
+
+.mainButton {
+    border: none;
+    padding: 15px 35px;
+    border-radius: 50px;
+    background: rgba(255,255,255,.12);
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,.3);
+    backdrop-filter: blur(10px);
+    transition: .3s;
+    box-shadow: 0 0 30px rgba(255,100,180,.2);
 }
 
-.about-btn:hover {
-  color: #ff2a75;
+.mainButton:hover {
+    transform: scale(1.08);
+    background: rgba(255,100,180,.2);
 }
 
-body.light .about-btn {
-  color: #111;
+/* СЕРЦЕ */
+
+.heart {
+    font-size: 90px;
+    animation: heartbeat 1.3s infinite;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 25px #ff4f9a);
 }
 
-/* Спливаючий блок Про нас */
-.about-popup {
-  position: absolute;
-  top: 60px;
-  right: 150px; /* прив'язка до кнопки */
-  background: rgba(255,255,255,0.9);
-  color: #111;
-  padding: 15px 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
-  display: none;
-  z-index: 3;
-  max-width: 300px;
-  font-weight: bold;
-  line-height: 1.4em;
+@keyframes heartbeat {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+
 }
+
+/* ПОСЛАННЯ */
+
+.message {
+    max-width: 500px;
+    font-size: 22px;
+    line-height: 1.6;
+    animation: fadeUp 1.5s ease;
+}
+
+/* GIFT */
+
+.gift {
+    font-size: 100px;
+    cursor: pointer;
+    animation: giftFloat 2s infinite ease-in-out;
+    filter: drop-shadow(0 0 25px rgba(255,100,180,.6));
+    transition: .4s;
+}
+
+.gift:hover {
+    transform: scale(1.15);
+}
+
+@keyframes giftFloat {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+}
+
+/* ФІНАЛ */
+
+.finalText {
+    font-size: 30px;
+    animation: fadeUp 1.5s ease;
+}
+
+.finalSmall {
+    margin-top: 15px;
+    opacity: .7;
+    font-size: 17px;
+}
+
+/* СЕРДЕЧКА */
+
+.floatingHeart {
+    position: fixed;
+    bottom: -50px;
+    font-size: 25px;
+    animation: rise 4s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes rise {
+
+    0% {
+        transform: translateY(0) scale(.8) rotate(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.5) rotate(30deg);
+        opacity: 0;
+    }
+
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="side-text">Amaram.Shop</div>
-<button class="about-btn">Про нас</button>
+<!-- ЧАСТИНКИ -->
 
-<div class="about-popup">
-  Ми студія яка виготовляє індивідуальні прикраси на ваш вибір та смак. Також є прикраси, які ви можете замовити прямо зараз, які вже є в наявності! Не втрачай можливості!
-</div>
+<div class="particle" style="left:10%;top:20%"></div>
+<div class="particle" style="left:25%;top:70%"></div>
+<div class="particle" style="left:45%;top:30%"></div>
+<div class="particle" style="left:65%;top:80%"></div>
+<div class="particle" style="left:80%;top:25%"></div>
+<div class="particle" style="left:90%;top:60%"></div>
 
-<button class="theme-toggle">Тема</button>
 
-<div class="center">
-  <h1>Amaram Shop</h1>
-  <a class="btn" href="https://www.instagram.com/amaram.shop/" target="_blank">
-    Instagram
-  </a>
-</div>
+<!-- ЕКРАН 1 -->
+
+<section class="screen" id="screen1">
+
+    <div class="heart">♡</div>
+
+    <h1 class="title">
+        Для тебе...
+    </h1>
+
+    <p class="subtitle">
+        Тут є дещо особливе ❤️
+    </p>
+
+    <button class="mainButton" onclick="openMessage()">
+        Відкрити 💗
+    </button>
+
+</section>
+
+
+<!-- ЕКРАН 2 -->
+
+<section class="screen hidden" id="screen2">
+
+    <div class="heart">♥</div>
+
+    <p class="message">
+        Іноді не потрібно багато слів...
+        <br><br>
+        Достатньо просто знати,
+        що є людина, яка робить
+        твої дні особливими ❤️
+    </p>
+
+    <button class="mainButton" onclick="showGift()">
+        Далі ✨
+    </button>
+
+</section>
+
+
+<!-- ЕКРАН 3 -->
+
+<section class="screen hidden" id="screen3">
+
+    <div class="gift" onclick="openGift()">
+        🎁
+    </div>
+
+    <h2 style="margin-top:25px;">
+        Для тебе є подарунок
+    </h2>
+
+    <p class="subtitle">
+        Натисни на нього
+    </p>
+
+</section>
+
+
+<!-- ФІНАЛ -->
+
+<section class="screen hidden" id="screen4">
+
+    <div class="heart">❤️</div>
+
+    <h1 class="finalText">
+        Ти особлива людина ❤️
+    </h1>
+
+    <p class="finalSmall">
+        І це маленьке нагадування про це.
+    </p>
+
+</section>
+
 
 <script>
-// Частинки
-const particlesCount = 60;
-for (let i = 0; i < particlesCount; i++) {
-  const p = document.createElement('div');
-  p.classList.add('particle');
-  p.style.left = window.innerWidth/2 + 'px';
-  p.style.top = window.innerHeight/2 + 'px';
-  const x = (Math.random() - 0.5) * 800 + 'px';
-  const y = (Math.random() - 0.5) * 600 + 'px';
-  p.style.setProperty('--x', x);
-  p.style.setProperty('--y', y);
-  p.style.animationDuration = (Math.random()*5 + 3) + 's';
-  p.style.width = p.style.height = (Math.random()*6 + 3) + 'px';
-  document.body.appendChild(p);
+
+/* ПЕРЕХІД */
+
+function changeScreen(oldScreen, newScreen) {
+
+    oldScreen.classList.add("hidden");
+
+    setTimeout(() => {
+
+        newScreen.classList.remove("hidden");
+
+    }, 700);
+
 }
 
-// Тема
-document.querySelector('.theme-toggle').addEventListener('click', () => {
-  document.body.classList.toggle('light');
-});
 
-// Про нас
-const aboutBtn = document.querySelector('.about-btn');
-const aboutPopup = document.querySelector('.about-popup');
-aboutBtn.addEventListener('click', () => {
-  aboutPopup.style.display = aboutPopup.style.display === 'block' ? 'none' : 'block';
-});
+/* ПЕРШИЙ ПЕРЕХІД */
+
+function openMessage() {
+
+    changeScreen(
+        document.getElementById("screen1"),
+        document.getElementById("screen2")
+    );
+
+}
+
+
+/* GIFT */
+
+function showGift() {
+
+    changeScreen(
+        document.getElementById("screen2"),
+        document.getElementById("screen3")
+    );
+
+}
+
+
+/* ВІДКРИТТЯ ПОДАРУНКА */
+
+function openGift() {
+
+    createHearts();
+
+    setTimeout(() => {
+
+        changeScreen(
+            document.getElementById("screen3"),
+            document.getElementById("screen4")
+        );
+
+    }, 900);
+
+}
+
+
+/* ЛЕТЮЧІ СЕРДЕЧКА */
+
+function createHearts() {
+
+    for(let i = 0; i < 35; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.className = "floatingHeart";
+
+        heart.innerHTML =
+            Math.random() > 0.5 ? "❤️" : "💗";
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.animationDuration =
+            (3 + Math.random() * 3) + "s";
+
+        heart.style.fontSize =
+            (15 + Math.random() * 25) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+
+    }
+
+}
+
 </script>
 
 </body>
